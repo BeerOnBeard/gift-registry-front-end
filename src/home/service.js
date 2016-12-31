@@ -1,3 +1,5 @@
+var ko = require('knockout');
+
 function getGift(id, name) {
   return { id: id, name: name };
 }
@@ -6,8 +8,14 @@ function getFriend(name) {
   return { name: name };
 }
 
-function getWishListItem(id, name) {
-  return { id: id, name: name };
+function getWishListItem(id, name, description) {
+  return {
+    id: id,
+    name: name,
+    description: description,
+    url: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/',
+    selected: ko.observable(false)
+  };
 }
 
 function service() {
@@ -36,9 +44,15 @@ function service() {
   self.getWishListPromise = function() {
     return new Promise(function(resolve, reject) {
       resolve([
-        getWishListItem(1, 'Item 1'),
-        getWishListItem(2, 'Item 2'),
-        getWishListItem(3, 'Item 3')
+        getWishListItem(1, 'Item 1', 'Item 1 Description'),
+        getWishListItem(2, 'Item 2', 'Item 2 Description'),
+        getWishListItem(3, 'Item 3', 'Item 3 Description'),
+        getWishListItem(2, 'Item 4', 'Item 4 Description'),
+        getWishListItem(2, 'Item 5', 'Item 5 Description'),
+        getWishListItem(2, 'Item 6', 'Item 6 Description'),
+        getWishListItem(2, 'Item 7', 'Item 7 Description'),
+        getWishListItem(2, 'Item 8', 'Item 8 Description'),
+        getWishListItem(2, 'Item 9', 'Item 9 Description')
       ]);
     });
   };

@@ -8,10 +8,24 @@ var ko = require('knockout');
 function WishListViewModel(constArgs) {
   var self = this;
   self.service = constArgs.service;
+  self.template = 'tmpl-wish-list';
 
   self.testName = ko.observable('Wish List');
+  self.items = ko.observableArray();
+  self.selectedItem;
 
-  self.wishList = ko.observableArray();
+  self.select = function(item) {
+    if (self.selectedItem) {
+      self.selectedItem.selected(false);
+    }
+
+    item.selected(true);
+    self.selectedItem = item;
+  };
+
+  self.go = function(item) {
+    window.open(item.url);
+  };
 
   /*
     Promise to initialize this instance of the WishListViewModel.
@@ -20,8 +34,8 @@ function WishListViewModel(constArgs) {
   self.initPromise = function() {
     return new Promise(function(resolve, reject){
       self.service.getWishListPromise()
-        .then(function(wishList){
-          self.wishList(wishList);
+        .then(function(wishListItems){
+          self.items(wishListItems);
           resolve(self);
         });
     });

@@ -9,6 +9,7 @@ $primary-color-click: #0062CC;
 $warning-color: #B8311E;
 $warning-color-hover: #A42B1A;
 $warning-color-click: #772014;
+$card-color: #F0F0F0;
 
 html, body{
   height: 100%;
@@ -20,7 +21,9 @@ body {
 }
 
 #content {
-  flex: 1;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  height: 0px;
 }
 
 .menu {
@@ -34,7 +37,7 @@ body {
   background-color: $default-color;
   cursor: pointer;
   border: 1px solid black;
-  padding: 10px 0;
+  padding: 1em 0;
 
   &:hover {
     background-color: $default-color-hover;
@@ -48,3 +51,50 @@ body {
 .menu__item--selected {
   background-color: $default-color-selected;
 }
+
+/* Wish List ********************/
+.wish-list {
+  display: flex;
+  flex-flow: column;
+}
+
+.wish-list__item {
+  border: 1px solid #C0C0C0;
+  background-color: $card-color;
+  padding: 1em;
+}
+
+.wish-list-item__name {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.wish-list-item__controls {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.wli-control {
+  flex-basis: 30%;
+  padding: 1em 0;
+  background-color: $default-color;
+  text-align: center;
+}
+
+.wli-control__delete {
+  background-color: $warning-color;
+
+  &:hover { background-color: $warning-color-hover; }
+  &:active { background-color: $warning-color-click; }
+}
+
+.wli-control__go {
+  background-color: $primary-color;
+
+  &:hover { background-color: $primary-color-hover; }
+  &:active { background-color: $primary-color-click; }
+}
+
+/* End Wish List ****************/

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "http-server ./build -c-1 -o",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf build/*",
+    "clean": "mkdir -p build && rm -rf build/*",
     "build:js": "browserify ./src/home/home.js > ./build/home.min.js",
     "build:css": "find ./src -name *.scss -exec node-sass {} -o ./build --output-style compressed \\;",
     "build:html": "find ./src -name *.html -exec cp {} ./build \\;",

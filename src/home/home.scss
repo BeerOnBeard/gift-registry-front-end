@@ -1,0 +1,50 @@
+@import "../../third-party/pure-css/base.scss";
+
+$default-color: #A29C9B;
+$default-color-hover: #8D8786;
+$default-color-selected: #928c8B;
+$primary-color: #0075F2;
+$primary-color-hover: #0069DA;
+$primary-color-click: #0062CC;
+$warning-color: #B8311E;
+$warning-color-hover: #A42B1A;
+$warning-color-click: #772014;
+
+html, body{
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+}
+
+#content {
+  flex: 1;
+}
+
+.menu {
+  display: flex;
+  flex-flow: row;
+}
+
+.menu__item {
+  flex: 1;
+  text-align: center;
+  background-color: $default-color;
+  cursor: pointer;
+  border: 1px solid black;
+  padding: 10px 0;
+
+  &:hover {
+    background-color: $default-color-hover;
+  }
+
+  &:active {
+    background-color: $default-color-selected;
+  }
+}
+
+.menu__item--selected {
+  background-color: $default-color-selected;
+}

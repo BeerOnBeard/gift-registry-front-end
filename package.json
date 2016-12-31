@@ -1,0 +1,39 @@
+{
+  "name": "gift-registry",
+  "version": "0.1.0",
+  "description": "Front-end for the Assorted Solutions Gift Registry application.",
+  "author": "Adam Fournier",
+  "license": "ISC",
+  "scripts": {
+    "start": "http-server ./build -c-1 -o",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf build/*",
+    "build:js": "browserify ./src/home/home.js > ./build/home.min.js",
+    "build:css": "find ./src -name *.scss -exec node-sass {} -o ./build --output-style compressed \\;",
+    "build:html": "find ./src -name *.html -exec cp {} ./build \\;",
+    "build:templates": "find ./src -name *.template.js -exec cp {} ./build \\;",
+    "build:favicon": "cp ./src/favicon.ico ./build/favicon.ico",
+    "build:images": "rsync -r ./src/images/ ./build/images/",
+    "build": "npm run clean && npm run build:js && npm run build:css && npm run build:html && npm run build:templates && npm run build:favicon && npm run build:images",
+    "run:jstests": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
+    "watch:js": "chokidar './src/**/*.js' -c 'npm run build:js' -i '/(\\.template\\.js|\\.test\\.js)/'",
+    "watch:css": "chokidar './src/**/*.scss' -c 'npm run build:css'",
+    "watch:html": "chokidar './src/**/*.html' -c 'npm run build:html'",
+    "watch:templates": "chokidar './src/**/*.template.js' -c 'npm run build:templates'",
+    "watch:jstests": "chokidar './src/**/*.test.js' -c 'npm run run:jstests'",
+    "watch:all": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html' 'npm run watch:templates' 'npm run watch:jstests'",
+    "build:watch": "npm run build && npm run watch:all"
+  },
+  "dependencies": {
+    "browserify": "^13.0.1",
+    "chokidar-cli": "^1.2.0",
+    "http-server": "^0.9.0",
+    "knockout": "^3.4.1",
+    "node-sass": "^4.1.1",
+    "parallelshell": "^2.0.0",
+    "uglify-js": "^2.7.5"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2"
+  }
+}

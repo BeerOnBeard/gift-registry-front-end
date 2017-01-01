@@ -97,4 +97,45 @@ body {
   &:active { background-color: $primary-color-click; }
 }
 
+/* Wish List Item Edit *****************************/
+.wli-edit {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  padding: 1em;
+
+  & textarea {
+    margin: 0.5em 0 1.5em 0;
+    height: 6em;
+  }
+
+  & input {
+    margin: 0.5em 0 1.5em 0;
+  }
+}
+
+.wli-edit__controls {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.wli-edit-control {
+  flex-basis: 48%;
+  padding: 1em 0;
+  text-align: center;
+}
+
+.wli-edit-control__cancel {
+  background-color: $warning-color;
+}
+
+.wli-edit-control__save {
+  background-color: $primary-color;
+}
+
+
+
+/* END Wish list Item Edit *************************/
+
 /* End Wish List ****************/

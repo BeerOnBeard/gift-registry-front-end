@@ -11,9 +11,9 @@ function getFriend(name) {
 function getWishListItem(id, name, description) {
   return {
     id: id,
-    name: name,
-    description: description,
-    url: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/',
+    name: ko.observable(name),
+    description: ko.observable(description),
+    url: ko.observable('https://css-tricks.com/snippets/css/a-guide-to-flexbox/'),
     selected: ko.observable(false)
   };
 }
@@ -54,6 +54,12 @@ function service() {
         getWishListItem(2, 'Item 8', 'Item 8 Description'),
         getWishListItem(2, 'Item 9', 'Item 9 Description')
       ]);
+    });
+  };
+
+  self.saveWishListItemPromise = function(item) {
+    return new Promise(function(resolve, reject) {
+      resolve();
     });
   };
 }

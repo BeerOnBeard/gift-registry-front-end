@@ -14,3 +14,9 @@
   </div>
 </div>
 </script>
+
+<script type="text/html" id="tmpl-friends">
+</script>
+
+<script type="text/html" id="tmpl-gifts">
+</script>

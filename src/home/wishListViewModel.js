@@ -10,7 +10,6 @@ function WishListViewModel(constArgs) {
   self.service = constArgs.service;
   self.template = 'tmpl-wish-list';
 
-  self.testName = ko.observable('Wish List');
   self.items = ko.observableArray();
   self.selectedItem;
 

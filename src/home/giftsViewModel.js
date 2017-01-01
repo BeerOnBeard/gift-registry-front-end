@@ -8,9 +8,8 @@ var ko = require('knockout');
 function GiftsViewModel(constArgs) {
   var self = this;
   self.service = constArgs.service;
-
-  self.testName = ko.observable('Gifts');
-
+  self.template = 'tmpl-gifts';
+  
   self.gifts = ko.observableArray();
 
   /*

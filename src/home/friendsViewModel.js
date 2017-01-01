@@ -8,8 +8,7 @@ var ko = require('knockout');
 function FriendsViewModel(constArgs) {
   var self = this;
   self.service = constArgs.service;
-
-  self.testName = ko.observable('Friends');
+  self.template = 'tmpl-friends';
 
   self.friends = ko.observableArray();
 

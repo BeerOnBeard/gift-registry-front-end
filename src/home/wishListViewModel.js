@@ -40,9 +40,45 @@ function WishListViewModel(constArgs) {
 
   self.editSave = function() {
     self.service.saveWishListItemPromise(self.selectedItem())
-      .then(function() {
+      .then(function(item) {
+        self.selectedItem().id = item.id;
+        self.selectedItem().name(item.name()),
+        self.selectedItem().description(item.description()),
+        self.selectedItem().url(item.url());
+
         self.template(templates.list);
       });
+  };
+
+  self.editDelete = function() {
+    var itemToRemove = self.selectedItem();
+
+    // item has never been saved
+    if (!itemToRemove.id) {
+      self.selectedItem(undefined);
+      self.items.remove(itemToRemove);
+      self.template(templates.list);
+    }
+
+    // item must be removed from the backing store
+    self.service.deleteWishListItemPromise(itemToRemove)
+      .then(function() {
+        self.selectedItem(undefined);
+        self.items.remove(itemToRemove);
+        self.template(templates.list);
+      });;
+  };
+
+  self.add = function() {
+    var newItem = {
+      name: ko.observable(),
+      description: ko.observable(),
+      url: ko.observable(),
+      selected: ko.observable()
+    };
+
+    self.items.push(newItem);
+    self.edit(newItem);
   };
 
   /*

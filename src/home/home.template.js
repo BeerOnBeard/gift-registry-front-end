@@ -12,7 +12,7 @@
     <!-- /ko -->
   </div>
 </div>
-<div class="wish-list__add"><span>+</span></div>
+<div class="wish-list__add" data-bind="click: add"><span>+</span></div>
 </script>
 
 <script type="text/html" id="tmpl-wish-list-item-edit">
@@ -27,7 +27,7 @@
   <input type="text" name="wli-link" id="wli-link" data-bind="value: url" />
   
   <div class="wli-edit__controls">
-    <div class="wli-edit-control wli-edit-control__delete">Delete</div>
+    <div class="wli-edit-control wli-edit-control__delete" data-bind="click: $parent.editDelete">Delete</div>
     <div class="wli-edit-control wli-edit-control__save" data-bind="click: $parent.editSave">Save</div>
   </div>
 </div>

@@ -58,6 +58,20 @@ function service() {
   };
 
   self.saveWishListItemPromise = function(item) {
+    /* NOTE: The real version of this service will have to deal with
+             creating a new item if there's no ID and updating if the
+             ID does exist. */
+    if (!item.id) {
+      // get a number between 100 and 1000 and assign as the ID
+      item.id = Math.floor(Math.random() * 900) + 100;
+    }
+
+    return new Promise(function(resolve, reject) {
+      resolve(item);
+    });
+  };
+
+  self.deleteWishListItemPromise = function(item) {
     return new Promise(function(resolve, reject) {
       resolve();
     });

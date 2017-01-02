@@ -8,7 +8,15 @@ describe('WishListViewModel', function(){
   beforeEach(function(){
     this.mockService = jasmine.createSpyObj('service', [ 'saveWishListItemPromise' ]);
 
-    this.saveWishListItemPromise = new Promise(function(resolve){ resolve(); });
+    this.saveWishListItemPromise = new Promise(
+      function(resolve){
+        resolve({
+          id: 1,
+          name: function(){},
+          description: function(){},
+          url: function(){}
+        });
+    });
     this.mockService.saveWishListItemPromise.and.returnValue(this.saveWishListItemPromise)
     this.SUT = new WishListViewModel({ service: this.mockService });
   });
@@ -36,7 +44,11 @@ describe('WishListViewModel', function(){
 
   describe('when editing an item', function(){
     beforeEach(function(){
-      this.mockEditItem = jasmine.createSpy();
+      this.mockEditItem = jasmine.createSpyObj('item', [ 'id', 'name', 'description', 'url' ]);
+      this.mockEditItem.id.and.returnValue(1);
+      this.mockEditItem.name.and.returnValue(function(){});
+      this.mockEditItem.description.and.returnValue(function(){});
+      this.mockEditItem.url.and.returnValue(function(){});
       this.SUT.edit(this.mockEditItem);
     });
 
@@ -61,6 +73,30 @@ describe('WishListViewModel', function(){
       it('should update the template', function(){
         expect(this.SUT.template()).toBe(templates.list);
       });
+
+      xit('TODO: add tests around setting properties from return from save call', function(){});
     });
+  });
+
+  describe('when adding an item', function(){
+    beforeEach(function(){
+      spyOn(this.SUT, 'edit').and.callThrough();;
+
+      this.SUT.add();
+    });
+
+    it('should add a new item with no ID to the items collection', function(){
+      if (!this.SUT.items().some(function(item) { return item.id === undefined; })) {
+        fail('New item was not added to the items collection.');
+      }
+    });
+
+    it('should edit the item', function(){
+      expect(this.SUT.edit).toHaveBeenCalled();
+    });
+  });
+
+  describe('when deleting an item', function(){
+    xit('TODO: add tests around delete', function(){});
   });
 });

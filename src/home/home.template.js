@@ -12,6 +12,7 @@
     <!-- /ko -->
   </div>
 </div>
+<div class="wish-list__add"><span>+</span></div>
 </script>
 
 <script type="text/html" id="tmpl-wish-list-item-edit">

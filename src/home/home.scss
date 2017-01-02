@@ -39,7 +39,6 @@ body {
   box-shadow: 0 0 5px 0;
   background-color: $outside-color;
   display: flex;
-  flex-flow: row;
 }
 
 .menu__item {
@@ -75,24 +74,14 @@ body {
 
 .wish-list-item__controls {
   display: flex;
-  flex-flow: row;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .wli-control {
-  flex-basis: 30%;
-  padding: 1em 0;
-}
-
-.wli-control__edit {
-  color: $default-color;
-  text-transform: uppercase;
-}
-
-.wli-control__go {
+  padding: 1em;
   color: $primary-color;
   text-transform: uppercase;
-  text-align: right;
+  cursor: pointer;
 }
 
 /* Wish List Item Edit *****************************/
@@ -120,18 +109,18 @@ body {
 
 .wli-edit-control {
   flex-basis: 30%;
-  padding: 1em 0;
+  padding: 1em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
 }
 
 .wli-edit-control__delete {
   color: $warning-color;
-  text-transform: uppercase;
 }
 
 .wli-edit-control__save {
   color: $primary-color;
-  text-transform: uppercase;
-  text-align: right;
 }
 
 /* END Wish list Item Edit *************************/

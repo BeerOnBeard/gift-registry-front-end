@@ -1,6 +1,6 @@
 @import "../../third-party/pure-css/base.scss";
 
-$default-color: #A29C9B;
+$default-color: #8D8786;
 $default-color-hover: #8D8786;
 $default-color-selected: #928c8B;
 $primary-color: #0075F2;
@@ -9,7 +9,11 @@ $primary-color-click: #0062CC;
 $warning-color: #B8311E;
 $warning-color-hover: #A42B1A;
 $warning-color-click: #772014;
-$card-color: #F0F0F0;
+$outside-color: #F0F0F0; // header and footer color
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
 
 html, body{
   height: 100%;
@@ -20,6 +24,11 @@ body {
   flex-flow: column;
 }
 
+#header {
+  box-shadow: 0 0 5px 0;
+  background-color: $outside-color;
+}
+
 #content {
   flex: 1 1 auto;
   overflow-y: auto;
@@ -27,6 +36,8 @@ body {
 }
 
 .menu {
+  box-shadow: 0 0 5px 0;
+  background-color: $outside-color;
   display: flex;
   flex-flow: row;
 }
@@ -34,22 +45,12 @@ body {
 .menu__item {
   flex: 1;
   text-align: center;
-  background-color: $default-color;
   cursor: pointer;
-  border: 1px solid black;
   padding: 1em 0;
-
-  &:hover {
-    background-color: $default-color-hover;
-  }
-
-  &:active {
-    background-color: $default-color-selected;
-  }
 }
 
 .menu__item--selected {
-  background-color: $default-color-selected;
+  color: $primary-color;
 }
 
 /* Wish List ********************/
@@ -58,15 +59,17 @@ body {
   flex-flow: column;
 }
 
-.wish-list__item {
-  border: 1px solid #C0C0C0;
-  background-color: $card-color;
+.wish-list-item {
+  border-bottom: 1px solid #C0C0C0;
   padding: 1em;
+}
+
+.wish-list-item--selected {
+  box-shadow: 0 0 10px 0;
 }
 
 .wish-list-item__name {
   font-size: 2em;
-  font-weight: bold;
   margin: 0;
 }
 
@@ -79,22 +82,17 @@ body {
 .wli-control {
   flex-basis: 30%;
   padding: 1em 0;
-  background-color: $default-color;
-  text-align: center;
 }
 
-.wli-control__delete {
-  background-color: $warning-color;
-
-  &:hover { background-color: $warning-color-hover; }
-  &:active { background-color: $warning-color-click; }
+.wli-control__edit {
+  color: $default-color;
+  text-transform: uppercase;
 }
 
 .wli-control__go {
-  background-color: $primary-color;
-
-  &:hover { background-color: $primary-color-hover; }
-  &:active { background-color: $primary-color-click; }
+  color: $primary-color;
+  text-transform: uppercase;
+  text-align: right;
 }
 
 /* Wish List Item Edit *****************************/
@@ -121,20 +119,20 @@ body {
 }
 
 .wli-edit-control {
-  flex-basis: 48%;
+  flex-basis: 30%;
   padding: 1em 0;
-  text-align: center;
 }
 
-.wli-edit-control__cancel {
-  background-color: $warning-color;
+.wli-edit-control__delete {
+  color: $warning-color;
+  text-transform: uppercase;
 }
 
 .wli-edit-control__save {
-  background-color: $primary-color;
+  color: $primary-color;
+  text-transform: uppercase;
+  text-align: right;
 }
-
-
 
 /* END Wish list Item Edit *************************/
 

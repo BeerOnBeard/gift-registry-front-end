@@ -36,10 +36,7 @@ describe('WishListViewModel', function(){
 
   describe('when editing an item', function(){
     beforeEach(function(){
-      this.mockEditItem = jasmine.createSpyObj('item', [ 'name', 'description', 'url' ]);
-      this.mockEditItem.name.and.returnValue('good');
-      this.mockEditItem.description.and.returnValue('good');
-      this.mockEditItem.url.and.returnValue('good');
+      this.mockEditItem = jasmine.createSpy();
       this.SUT.edit(this.mockEditItem);
     });
 
@@ -49,25 +46,6 @@ describe('WishListViewModel', function(){
 
     it('should update the template', function(){
       expect(this.SUT.template()).toBe(templates.edit);
-    });
-
-    describe('and editing is canceled', function(){
-      beforeEach(function(){
-        this.SUT.selectedItem().name('bad');
-        this.SUT.selectedItem().description('bad');
-        this.SUT.selectedItem().url('bad');
-        this.SUT.editCancel();
-      });
-
-      it('should revert all changes', function(){
-        expect(this.SUT.selectedItem().name()).toBe('good');
-        expect(this.SUT.selectedItem().description()).toBe('good');
-        expect(this.SUT.selectedItem().url()).toBe('good');
-      });
-
-      it('should update the template', function(){
-        expect(this.SUT.template()).toBe(templates.list);
-      });
     });
 
     describe('and it is saved', function(){
@@ -82,7 +60,7 @@ describe('WishListViewModel', function(){
 
       it('should update the template', function(){
         expect(this.SUT.template()).toBe(templates.list);
-      })
-    })
+      });
+    });
   });
 });

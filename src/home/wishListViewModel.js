@@ -12,8 +12,7 @@ var templates = {
     service: Service layer to get information about the user's wish list from a backing store
 */
 function WishListViewModel(constArgs) {
-  var self = this,
-      selectedItemBeforeEdit; // when editing, this will hold the original state of the item if the user cancels
+  var self = this;
 
   self.service = constArgs.service;
   self.template = ko.observable(templates.list);
@@ -36,12 +35,6 @@ function WishListViewModel(constArgs) {
 
   self.edit = function(item) {
     self.selectedItem(item);
-    selectedItemBeforeEdit = {
-      name: item.name(),
-      description: item.description(),
-      url: item.url()
-    };
-    
     self.template(templates.edit);
   };
 
@@ -50,14 +43,6 @@ function WishListViewModel(constArgs) {
       .then(function() {
         self.template(templates.list);
       });
-  };
-
-  self.editCancel = function() {
-    self.selectedItem().name(selectedItemBeforeEdit.name);
-    self.selectedItem().description(selectedItemBeforeEdit.description);
-    self.selectedItem().url(selectedItemBeforeEdit.url);
-
-    self.template(templates.list);
   };
 
   /*

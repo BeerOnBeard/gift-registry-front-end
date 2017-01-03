@@ -6,7 +6,7 @@ var templates = {
 
 describe('WishListViewModel', function(){
   beforeEach(function(){
-    this.mockService = jasmine.createSpyObj('service', [ 'saveWishListItemPromise' ]);
+    this.mockService = jasmine.createSpyObj('service', [ 'saveWishListItemPromise', 'deleteWishListItemPromise' ]);
 
     this.saveWishListItemPromise = new Promise(
       function(resolve){
@@ -17,7 +17,11 @@ describe('WishListViewModel', function(){
           url: function(){}
         });
     });
-    this.mockService.saveWishListItemPromise.and.returnValue(this.saveWishListItemPromise)
+
+    this.deleteWishListItemPromise = new Promise(function(resolve, reject){ resolve(); });
+
+    this.mockService.saveWishListItemPromise.and.returnValue(this.saveWishListItemPromise);
+    this.mockService.deleteWishListItemPromise.and.returnValue(this.deleteWishListItemPromise);
     this.SUT = new WishListViewModel({ service: this.mockService });
   });
 
@@ -46,9 +50,6 @@ describe('WishListViewModel', function(){
     beforeEach(function(){
       this.mockEditItem = jasmine.createSpyObj('item', [ 'id', 'name', 'description', 'url' ]);
       this.mockEditItem.id.and.returnValue(1);
-      this.mockEditItem.name.and.returnValue(function(){});
-      this.mockEditItem.description.and.returnValue(function(){});
-      this.mockEditItem.url.and.returnValue(function(){});
       this.SUT.edit(this.mockEditItem);
     });
 
@@ -74,7 +75,12 @@ describe('WishListViewModel', function(){
         expect(this.SUT.template()).toBe(templates.list);
       });
 
-      xit('TODO: add tests around setting properties from return from save call', function(){});
+      it('should set the values of the selected item with the values returned from the save call', function(){
+        expect(this.mockEditItem.id).toBe(1);
+        expect(this.mockEditItem.name).toHaveBeenCalled();
+        expect(this.mockEditItem.description).toHaveBeenCalled();
+        expect(this.mockEditItem.url).toHaveBeenCalled();
+      });
     });
   });
 
@@ -96,7 +102,57 @@ describe('WishListViewModel', function(){
     });
   });
 
-  describe('when deleting an item', function(){
-    xit('TODO: add tests around delete', function(){});
+  describe('when deleting an existing item', function(){
+    beforeEach(function(done){
+      var existingItem = { id: 1 };
+      this.SUT.items.push(existingItem);
+      this.SUT.selectedItem(existingItem);
+      this.SUT.editDelete();
+
+      this.deleteWishListItemPromise.then(function() { done(); });
+    });
+
+    it('should delete from backing store', function(){
+      expect(this.mockService.deleteWishListItemPromise).toHaveBeenCalled();
+    });
+
+    it('should set selectedItem to undefined', function(){
+      expect(this.SUT.expectedItem).toBe(undefined);
+    });
+
+    it('should remove the deleted item from the items collection', function(){
+      expect(this.SUT.items().length).toBe(0);
+    });
+
+    it('should set the template to list', function(){
+      expect(this.SUT.template()).toBe(templates.list);
+    });
+  });
+
+  describe('when deleting a new item', function(){
+    beforeEach(function(done){
+      var newItem = { id: undefined };
+      this.SUT.items.push(newItem);
+      this.SUT.selectedItem(newItem);
+      this.SUT.editDelete();
+
+      this.deleteWishListItemPromise.then(function() { done(); });
+    });
+
+    it('should not delete from backing store', function(){
+      expect(this.mockService.deleteWishListItemPromise).not.toHaveBeenCalled();
+    });
+
+    it('should set selectedItem to undefined', function(){
+      expect(this.SUT.expectedItem).toBe(undefined);
+    });
+
+    it('should remove the deleted item from the items collection', function(){
+      expect(this.SUT.items().length).toBe(0);
+    });
+
+    it('should set the template to list', function(){
+      expect(this.SUT.template()).toBe(templates.list);
+    });
   });
 });

@@ -38,6 +38,9 @@ function WishListViewModel(constArgs) {
     self.template(templates.edit);
   };
 
+  /* Will save the item that is currently being edited.
+     It is expected that the edit function was called and
+     the item to delete is in self.selectedItem(). */
   self.editSave = function() {
     self.service.saveWishListItemPromise(self.selectedItem())
       .then(function(item) {
@@ -50,6 +53,9 @@ function WishListViewModel(constArgs) {
       });
   };
 
+  /* Will delete the item that is currently being edited.
+     It is expected that the edit function was called and
+     the item to delete is in self.selectedItem(). */
   self.editDelete = function() {
     var itemToRemove = self.selectedItem();
 
@@ -58,6 +64,7 @@ function WishListViewModel(constArgs) {
       self.selectedItem(undefined);
       self.items.remove(itemToRemove);
       self.template(templates.list);
+      return;
     }
 
     // item must be removed from the backing store

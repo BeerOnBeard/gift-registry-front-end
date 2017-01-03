@@ -6,8 +6,8 @@
     <!-- ko if: selected -->
     <p class="wish-list-item__description" data-bind="text: description"></p>
     <div class="wish-list-item__controls">
-      <div class="wli-control wli-control__edit" data-bind="click: $parent.edit">Edit</div>
-      <div class="wli-control wli-control__go" data-bind="click: $parent.go">Go to Site</div>
+      <div data-bind="click: $parent.edit">Edit</div>
+      <div data-bind="click: $parent.go">Go to Site</div>
     </div>
     <!-- /ko -->
   </div>
@@ -26,14 +26,42 @@
   <label for="wli-link">Link</label>
   <input type="text" name="wli-link" id="wli-link" data-bind="value: url" />
   
-  <div class="wli-edit__controls">
-    <div class="wli-edit-control wli-edit-control__delete" data-bind="click: $parent.editDelete">Delete</div>
-    <div class="wli-edit-control wli-edit-control__save" data-bind="click: $parent.editSave">Save</div>
+  <div class="wli-edit-controls">
+    <div class="wli-edit-controls__delete" data-bind="click: $parent.editDelete">Delete</div>
+    <div class="wli-edit-controls__save" data-bind="click: $parent.editSave">Save</div>
   </div>
 </div>
 </script>
 
 <script type="text/html" id="tmpl-friends">
+<div class="friends-list" data-bind="foreach: friends">
+  <div class="friends-list-item" data-bind="click: $parent.selectFriend, css: { 'friends-list-item--selected': selected }">
+    <p class="friends-list-item__name" data-bind="text: name"></p>
+
+    <!-- ko if: selected -->
+      <p>Birthday: <span data-bind="text: birthday"></span></p>
+      <div class="friends-list-item__controls">
+        <div>Unfollow</div>
+      </div>
+    <!-- /ko -->
+  </div>
+
+  <!-- ko if: gifts -->
+  <div class="friends-list-item__gifts" data-bind="foreach: gifts">
+    <!-- TODO: $parentContext.$parent is no good. Figure out a better way. -->
+    <div class="friends-gift" data-bind="click: $parentContext.$parent.selectGift, css: { 'friends-gift--selected': selected }">
+      <p class="friends-gift__name" data-bind="text: name"></p>
+
+      <!-- ko if: selected -->
+      <p data-bind="text: description"></p>
+      <div class="friends-gift__controls">
+        <div>Register</div>
+      </div>
+      <!-- /ko -->
+    </div>
+  </div>
+  <!-- /ko -->
+</div>
 </script>
 
 <script type="text/html" id="tmpl-gifts">

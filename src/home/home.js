@@ -8,6 +8,9 @@ var service = new Service();
 var viewModelFactory = new ViewModelFactory({ service: service });
 var homeViewModel = new HomeViewModel({ viewModelFactory: viewModelFactory });
 
+// exposing ko for debug
+window.ko = ko;
+
 jquery.ajax({ url: '/home.template.js', dataType: 'html' })
 .done(function(response){
   jquery('body').append(response);

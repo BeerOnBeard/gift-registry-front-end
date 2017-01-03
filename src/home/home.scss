@@ -11,6 +11,49 @@ $warning-color-hover: #A42B1A;
 $warning-color-click: #772014;
 $outside-color: #F0F0F0; // header and footer color
 
+/* Common Styles *****************/
+@mixin list {
+  display: flex;
+  flex-flow: column;
+}
+
+@mixin list-item {
+  border-bottom: 1px solid #C8C8C8;
+  padding: 1em;
+
+  &:last-child {
+    // give some extra space at the bottom for the add button
+    margin-bottom: 3em;
+  }
+}
+
+@mixin list-item--selected {
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,0.15),
+    0 -4px 6px rgba(0,0,0,0.15);
+}
+
+@mixin list-item__title {
+  font-size: 2em;
+  margin: 0;
+}
+
+@mixin list-item__action {
+  padding: 1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@mixin list-item__primaryAction {
+  @include list-item__action;
+  color: $primary-color;
+}
+
+@mixin list-item__warningAction {
+  @include list-item__action;
+  color: $warning-color;
+}
+/* END Common Styles ************/
+
 html {
   font-family: 'Roboto', sans-serif;
 }
@@ -54,8 +97,7 @@ body {
 
 /* Wish List ********************/
 .wish-list {
-  display: flex;
-  flex-flow: column;
+  @include list;
 }
 
 .wish-list__add {
@@ -79,38 +121,27 @@ body {
 }
 
 .wish-list-item {
-  border-bottom: 1px solid #C0C0C0;
-  padding: 1em;
-}
-
-.wish-list-item:last-child {
-  // give some extra space at the bottom for the add button
-  margin-bottom: 3em;
+  @include list-item;
 }
 
 .wish-list-item--selected {
-  box-shadow: 0 4px 6px 0 rgba(0,0,0,0.15),
-    0 -4px 6px rgba(0,0,0,0.15);
+  @include list-item--selected;
 }
 
 .wish-list-item__name {
-  font-size: 2em;
-  margin: 0;
+  @include list-item__title;
 }
 
 .wish-list-item__controls {
   display: flex;
   justify-content: flex-end;
+
+  & > div {
+    @include list-item__primaryAction;
+  }
 }
 
-.wli-control {
-  padding: 1em;
-  color: $primary-color;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-/* Wish List Item Edit *****************************/
+/* Wish List Item Edit ***********/
 .wli-edit {
   display: flex;
   flex-flow: column;
@@ -127,28 +158,75 @@ body {
   }
 }
 
-.wli-edit__controls {
+.wli-edit-controls {
   display: flex;
   flex-flow: row;
-  justify-content: space-between;
-}
-
-.wli-edit-control {
-  flex-basis: 30%;
-  padding: 1em;
-  text-transform: uppercase;
+  justify-content: space-around;
   text-align: center;
-  cursor: pointer;
 }
 
-.wli-edit-control__delete {
-  color: $warning-color;
+.wli-edit-controls__save {
+  @include list-item__primaryAction;
 }
 
-.wli-edit-control__save {
-  color: $primary-color;
+.wli-edit-controls__delete {
+  @include list-item__warningAction;
 }
 
-/* END Wish list Item Edit *************************/
+/* END Wish list Item Edit *******/
+/* END Wish List *****************/
 
-/* End Wish List ****************/
+/* Friends List ******************/
+.friends-list {
+  @include list;
+}
+
+.friends-list-item {
+  @include list-item;
+}
+
+.friends-list-item--selected {
+  @include list-item--selected;
+}
+
+.friends-list-item__name {
+  @include list-item__title;
+}
+
+.friends-list-item__controls {
+  display: flex;
+  justify-content: flex-start;
+
+  & > div {
+    @include list-item__warningAction;
+  }
+}
+
+.friends-list-item__gifts {
+  display: flex;
+  flex-flow: column;
+  margin-left: 1em;
+}
+
+.friends-gift {
+  @include list-item;
+}
+
+.friends-gift--selected {
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,0.15);
+}
+
+.friends-gift__name {
+  font-size: 1.25em;
+}
+
+.friends-gift__controls {
+  display: flex;
+  justify-content: flex-end;
+
+  & > div {
+    @include list-item__primaryAction;
+  }
+}
+
+/* END Friends List **************/

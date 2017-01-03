@@ -1,11 +1,17 @@
 var ko = require('knockout');
 
-function getGift(id, name) {
-  return { id: id, name: name };
+function getGift(id, name, description) {
+  return { id: id, name: name, description: description, selected: ko.observable(false) };
 }
 
-function getFriend(name) {
-  return { name: name };
+function getFriend(id, name) {
+  return {
+    id: id,
+    name: name,
+    birthday: '2016-01-01',
+    selected: ko.observable(false),
+    gifts: ko.observableArray()
+  };
 }
 
 function getWishListItem(id, name, description) {
@@ -24,9 +30,9 @@ function service() {
   self.getGiftsPromise = function() {
     return new Promise(function(resolve, reject) {
       resolve([
-        getGift(1, 'Gift 1'),
-        getGift(2, 'Gift 2'),
-        getGift(3, 'Gift 3')
+        getGift(1, 'Gift 1', 'Gift 1 Description'),
+        getGift(2, 'Gift 2', 'Gift 2 Description'),
+        getGift(3, 'Gift 3', 'Gift 3 Description')
       ]);
     });
   };
@@ -34,9 +40,9 @@ function service() {
   self.getFriendsPromise = function() {
     return new Promise(function(resolve, reject) {
       resolve([
-        getFriend('Smara'),
-        getFriend('Matt'),
-        getFriend('Adam')
+        getFriend(1, 'Smara'),
+        getFriend(2, 'Matt'),
+        getFriend(3, 'Adam')
       ]);
     });
   };

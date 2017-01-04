@@ -38,7 +38,7 @@ function FriendsViewModel(constArgs) {
     }
 
     // If same friend was selected again, unselect friend and get out of here
-    if (currentFriendId && friend.id === currentFriendId) {
+    if (friend.id === currentFriendId) {
       self.selectedFriend(undefined);
       return;
     }
@@ -55,7 +55,7 @@ function FriendsViewModel(constArgs) {
     }
 
     // If the same gift was selected again, unselect gift and get out of here
-    if (currentGiftId && currentGiftId === gift.id) {
+    if (gift.id === currentGiftId) {
       self.selectedGift(undefined);
       return;
     }

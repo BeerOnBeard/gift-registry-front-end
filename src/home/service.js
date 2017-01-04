@@ -4,6 +4,19 @@ function getGift(id, name, description) {
   return { id: id, name: name, description: description, selected: ko.observable(false) };
 }
 
+function getUserGift(id, name) {
+  return {
+    id: id,
+    name: name,
+    selected: ko.observable(false),
+    gifts: [
+      getGift(1, 'Gift 1', 'Gift 1 Description'),
+      getGift(2, 'Gift 2', 'Gift 2 Description'),
+      getGift(3, 'Gift 3', 'Gift 3 Description')
+    ]
+  };
+}
+
 function getFriend(id, name) {
   return {
     id: id,
@@ -33,6 +46,16 @@ function service() {
         getGift(1, 'Gift 1', 'Gift 1 Description'),
         getGift(2, 'Gift 2', 'Gift 2 Description'),
         getGift(3, 'Gift 3', 'Gift 3 Description')
+      ]);
+    });
+  };
+
+  self.getUserGiftsPromise = function() {
+    return new Promise(function(resolve, reject) {
+      resolve([
+        getUserGift(1, 'Smara'),
+        getUserGift(2, 'Matt'),
+        getUserGift(3, 'Adam')
       ]);
     });
   };

@@ -21,7 +21,7 @@
     "watch:css": "chokidar './src/**/*.scss' -c 'npm run build:css'",
     "watch:html": "chokidar './src/**/*.html' -c 'npm run build:html'",
     "watch:templates": "chokidar './src/**/*.template.js' -c 'npm run build:templates'",
-    "watch:jstests": "chokidar './src/**/*.test.js' -c 'npm run run:jstests'",
+    "watch:jstests": "chokidar './src/**/*.js' -c 'npm run run:jstests' -i '/\\.template\\.js/'",
     "watch:jshint": "chokidar './src/**/*.js' -c 'npm run run:jshint' -i '/\\.template\\.js/'",
     "watch:all": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run watch:html' 'npm run watch:templates' 'npm run watch:jstests' 'npm run watch:jshint'",
     "build:watch": "npm run build && npm run watch:all"

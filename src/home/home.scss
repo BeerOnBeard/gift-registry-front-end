@@ -52,6 +52,20 @@ $outside-color: #F0F0F0; // header and footer color
   @include list-item__action;
   color: $warning-color;
 }
+
+@mixin sub-list {
+  display: flex;
+  flex-flow: column;
+  margin-left: 1em;
+}
+
+@mixin sub-list-item--selected {
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,0.15);
+}
+
+@mixin sub-list-item__title {
+  font-size: 1.25em;
+}
 /* END Common Styles ************/
 
 html {
@@ -203,9 +217,7 @@ body {
 }
 
 .friends-list-item__gifts {
-  display: flex;
-  flex-flow: column;
-  margin-left: 1em;
+  @include sub-list;
 }
 
 .friends-gift {
@@ -213,11 +225,11 @@ body {
 }
 
 .friends-gift--selected {
-  box-shadow: 0 4px 6px 0 rgba(0,0,0,0.15);
+  @include sub-list-item--selected;
 }
 
 .friends-gift__name {
-  font-size: 1.25em;
+  @include sub-list-item__title;
 }
 
 .friends-gift__controls {
@@ -228,5 +240,40 @@ body {
     @include list-item__primaryAction;
   }
 }
-
 /* END Friends List **************/
+
+/* Gifts List ********************/
+
+.user-list {
+  @include list;
+}
+
+.user-list-item {
+  @include list-item;
+}
+
+.user-list-item--selected {
+  @include list-item--selected;
+}
+
+.user-list-item__name {
+  @include list-item__title;
+}
+
+.user-list__gifts {
+  @include sub-list;
+}
+
+.user-gift {
+  @include list-item;
+}
+
+.user-gift--selected {
+  @include sub-list-item--selected;
+}
+
+.user-gift__name {
+  @include sub-list-item__title;
+}
+
+/* END Gifts List ****************/

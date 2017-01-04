@@ -65,4 +65,20 @@
 </script>
 
 <script type="text/html" id="tmpl-gifts">
+<div class="user-list" data-bind="foreach: users">
+  <div class="user-list-item" data-bind="click: $parent.selectUser, css: { 'user-list-item--selected': selected }">
+    <p class="user-list-item__name" data-bind="text: name"></p>
+  </div>
+  <!-- ko if: selected -->
+  <div class="user-list__gifts" data-bind="foreach: gifts">
+    <div class="user-gift" data-bind="click: $parentContext.$parent.selectGift, css: { 'user-gift--selected': selected }">
+      <p class="user-gift__name" data-bind="text: name"></p>
+
+      <!-- ko if: selected -->
+      <p data-bind="text: description"></p>
+      <!-- /ko -->
+    </div>
+  </div>
+  <!-- /ko -->
+</div>
 </script>

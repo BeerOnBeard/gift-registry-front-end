@@ -60,7 +60,7 @@ function FriendsViewModel(constArgs) {
       return;
     }
 
-    gift.selected(true)
+    gift.selected(true);
     self.selectedGift(gift);
   };
 

@@ -86,7 +86,7 @@ describe('WishListViewModel', function(){
 
   describe('when adding an item', function(){
     beforeEach(function(){
-      spyOn(this.SUT, 'edit').and.callThrough();;
+      spyOn(this.SUT, 'edit').and.callThrough();
 
       this.SUT.add();
     });

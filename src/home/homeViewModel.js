@@ -44,7 +44,7 @@ function HomeViewModel(constArgs) {
 
   self.isWishListSelected = ko.pureComputed(function() { return self.currentViewType() === viewTypes.wishList; });
   self.isFriendsSelected = ko.pureComputed(function() { return self.currentViewType() === viewTypes.friends; });
-  self.isGiftsSelected = ko.pureComputed(function() { return self.currentViewType() === viewTypes.gifts });
+  self.isGiftsSelected = ko.pureComputed(function() { return self.currentViewType() === viewTypes.gifts; });
 }
 
 module.exports = HomeViewModel;

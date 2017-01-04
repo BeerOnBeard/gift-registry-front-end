@@ -45,8 +45,8 @@ function WishListViewModel(constArgs) {
     self.service.saveWishListItemPromise(self.selectedItem())
       .then(function(item) {
         self.selectedItem().id = item.id;
-        self.selectedItem().name(item.name()),
-        self.selectedItem().description(item.description()),
+        self.selectedItem().name(item.name());
+        self.selectedItem().description(item.description());
         self.selectedItem().url(item.url());
 
         self.template(templates.list);
@@ -73,7 +73,7 @@ function WishListViewModel(constArgs) {
         self.selectedItem(undefined);
         self.items.remove(itemToRemove);
         self.template(templates.list);
-      });;
+      });
   };
 
   self.add = function() {

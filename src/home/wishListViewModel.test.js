@@ -27,8 +27,11 @@ describe('WishListViewModel', function(){
 
   describe('when selecting an item', function(){
     beforeEach(function(){
-      this.previousItem = jasmine.createSpyObj('previousItem', [ 'selected' ]);
-      this.newItem = jasmine.createSpyObj('newItem', [ 'selected' ]);
+      this.previousItem = { id: 1, selected: function(){} };
+      spyOn(this.previousItem, 'selected');
+      this.newItem = { id: 2, selected: function(){} };
+      spyOn(this.newItem, 'selected');
+
       this.SUT.selectedItem(this.previousItem);
       this.SUT.select(this.newItem);
     });
@@ -43,6 +46,16 @@ describe('WishListViewModel', function(){
 
     it('should set the selectedItem to the new item', function(){
       expect(this.SUT.selectedItem()).toBe(this.newItem);
+    });
+
+    describe('and it is selected again', function(){
+      beforeEach(function(){
+        this.SUT.select(this.newItem);
+      });
+
+      it('should set the selectedItem to undefined', function(){
+        expect(this.SUT.selectedItem()).toBe(undefined);
+      });
     });
   });
 

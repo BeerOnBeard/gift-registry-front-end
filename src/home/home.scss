@@ -282,6 +282,10 @@ body {
   @include sub-list;
 }
 
+.user-list__gifts--show {
+  @include sub-list--show;
+}
+
 .user-gift {
   @include list-item;
 }

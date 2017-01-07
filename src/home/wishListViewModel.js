@@ -21,8 +21,15 @@ function WishListViewModel(constArgs) {
   self.selectedItem = ko.observable();
 
   self.select = function(item) {
+    var selectedItemId;
     if (self.selectedItem()) {
+      selectedItemId = self.selectedItem().id;
       self.selectedItem().selected(false);
+    }
+
+    if (selectedItemId === item.id) {
+      self.selectedItem(undefined);
+      return;
     }
 
     item.selected(true);

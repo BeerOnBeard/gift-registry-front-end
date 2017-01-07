@@ -14,7 +14,6 @@ describe('FriendsViewModel', function(){
   describe('when selecting a friend', function(){
     beforeEach(function(done){
       var mockGifts = ko.observableArray();
-      spyOn(mockGifts, 'removeAll');
       this.mockFriend = { id: 1, selected: function(){}, gifts: mockGifts };
       spyOn(this.mockFriend, 'selected');
 
@@ -44,10 +43,6 @@ describe('FriendsViewModel', function(){
         this.getGiftsPromise.then(function(){ done(); });
       });
 
-      it('should remove all loaded gifts from the first friend', function(){
-        expect(this.mockFriend.gifts.removeAll).toHaveBeenCalled();
-      });
-
       it('should set selected to false on the frist friend', function(){
         expect(this.mockFriend.selected).toHaveBeenCalledWith(false);
       });
@@ -57,10 +52,6 @@ describe('FriendsViewModel', function(){
       beforeEach(function(done){
         this.SUT.selectFriend(this.mockFriend);
         this.getGiftsPromise.then(function(){ done(); });
-      });
-
-      it('should remove all gifts', function(){
-        expect(this.mockFriend.gifts.removeAll).toHaveBeenCalled();
       });
 
       it('should set selected to false', function(){

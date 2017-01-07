@@ -2,14 +2,11 @@
 <div class="wish-list" data-bind="foreach: items">
   <div class="wish-list-item" data-bind="click: $parent.select, css: { 'wish-list-item--selected': selected }">
     <p class="wish-list-item__name" data-bind="text: name"></p>
-
-    <!-- ko if: selected -->
     <p class="wish-list-item__description" data-bind="text: description"></p>
     <div class="wish-list-item__controls">
       <div data-bind="click: $parent.edit">Edit</div>
       <div data-bind="click: $parent.go">Go to Site</div>
     </div>
-    <!-- /ko -->
   </div>
 </div>
 <div class="wish-list__add" data-bind="click: add"><span>+</span></div>
@@ -37,30 +34,22 @@
 <div class="friends-list" data-bind="foreach: friends">
   <div class="friends-list-item" data-bind="click: $parent.selectFriend, css: { 'friends-list-item--selected': selected }">
     <p class="friends-list-item__name" data-bind="text: name"></p>
-
-    <!-- ko if: selected -->
-      <p>Birthday: <span data-bind="text: birthday"></span></p>
-      <div class="friends-list-item__controls">
-        <div>Unfollow</div>
-      </div>
-    <!-- /ko -->
+    <p>Birthday: <span data-bind="text: birthday"></span></p>
+    <div class="friends-list-item__controls">
+      <div>Unfollow</div>
+    </div>
   </div>
 
-  <!-- ko if: gifts -->
-  <div class="friends-list-item__gifts" data-bind="foreach: gifts">
+  <div class="friends-list-item__gifts" data-bind="css: { 'friends-list-item__gifts--show': selected }, foreach: gifts">
     <!-- TODO: $parentContext.$parent is no good. Figure out a better way. -->
     <div class="friends-gift" data-bind="click: $parentContext.$parent.selectGift, css: { 'friends-gift--selected': selected }">
       <p class="friends-gift__name" data-bind="text: name"></p>
-
-      <!-- ko if: selected -->
       <p data-bind="text: description"></p>
       <div class="friends-gift__controls">
         <div>Register</div>
       </div>
-      <!-- /ko -->
     </div>
   </div>
-  <!-- /ko -->
 </div>
 </script>
 

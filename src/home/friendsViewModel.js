@@ -33,7 +33,6 @@ function FriendsViewModel(constArgs) {
     var currentFriendId;
     if (self.selectedFriend()) {
       currentFriendId = self.selectedFriend().id;
-      self.selectedFriend().gifts.removeAll();
       self.selectedFriend().selected(false);
     }
 

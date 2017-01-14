@@ -22,7 +22,7 @@ $outside-color: #F0F0F0; // header and footer color
   padding: 1em;
   overflow: hidden;
   max-height: 2em; // matches list-item__title font-size so the title is only shown until selected
-  transition: box-shadow 1s, max-height 1s;
+  transition: box-shadow 0.5s, max-height 0.5s;
 
   &:last-child {
     // give some extra space at the bottom for the add button
@@ -65,7 +65,7 @@ $outside-color: #F0F0F0; // header and footer color
 
   overflow: hidden;
   max-height: 0;
-  transition: max-height 1s;
+  transition: max-height 0.5s;
 }
 
 @mixin sub-list--show {

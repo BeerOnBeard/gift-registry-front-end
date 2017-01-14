@@ -4,8 +4,8 @@
     <p class="wish-list-item__name" data-bind="text: name"></p>
     <p class="wish-list-item__description" data-bind="text: description"></p>
     <div class="wish-list-item__controls">
-      <div data-bind="click: $parent.edit">Edit</div>
-      <div data-bind="click: $parent.go">Go to Site</div>
+      <div data-bind="click: $parent.edit, clickBubble: false">Edit</div>
+      <div data-bind="click: $parent.go, clickBubble: false">Go to Site</div>
     </div>
   </div>
 </div>
@@ -24,8 +24,8 @@
   <input type="text" name="wli-link" id="wli-link" data-bind="value: url" />
   
   <div class="wli-edit-controls">
-    <div class="wli-edit-controls__delete" data-bind="click: $parent.editDelete">Delete</div>
-    <div class="wli-edit-controls__save" data-bind="click: $parent.editSave">Save</div>
+    <div class="wli-edit-controls__delete" data-bind="click: $parent.editDelete, clickBubble: false">Delete</div>
+    <div class="wli-edit-controls__save" data-bind="click: $parent.editSave, clickBubble: false">Save</div>
   </div>
 </div>
 </script>

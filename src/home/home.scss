@@ -45,6 +45,7 @@ $outside-color: #F0F0F0; // header and footer color
   padding: 1em;
   text-transform: uppercase;
   cursor: pointer;
+  color: $default-color;
 }
 
 @mixin list-item__primaryAction {
@@ -250,13 +251,21 @@ body {
   @include sub-list-item__title;
 }
 
-.friends-gift__controls {
+.friends-gift-controls {
   display: flex;
   justify-content: flex-end;
+}
 
-  & > div {
-    @include list-item__primaryAction;
-  }
+.friends-gift-controls__unregister {
+  @include list-item__warningAction;
+}
+
+.friends-gift-controls__register {
+  @include list-item__primaryAction;
+}
+
+.friends-gift-controls__register--disabled {
+  @include list-item__action;
 }
 /* END Friends List **************/
 

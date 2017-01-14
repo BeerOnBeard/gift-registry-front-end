@@ -1,7 +1,40 @@
 var ko = require('knockout');
 
-function getGift(id, name, description) {
-  return { id: id, name: name, description: description, selected: ko.observable(false) };
+/*
+ * TODO: need to split this out to its own file
+ * View model for a gift.
+ * @param {object} constArgs Should contain the following:
+ *        {string} userId Current user identifier
+ *        {object} gift Pure JS object returned from the data store
+ */
+function GiftViewModel(constArgs) {
+  var self = this;
+
+  self.id = constArgs.gift.id;
+  self.name = constArgs.gift.name;
+  self.description = constArgs.gift.description;
+  self.claimedBy = ko.observable(constArgs.gift.claimedBy);
+  self.selected = ko.observable(false);
+  self.canRegister = ko.pureComputed(function(){
+    return self.claimedBy() === undefined;
+  });
+  self.canUnregister = ko.pureComputed(function(){
+    return self.claimedBy() === constArgs.userId;
+  });
+}
+
+function getGift(userId, id, name, description, claimedBy) {
+  var expectedReturnFromApi = {
+    id: id,
+    name: name,
+    description: description,
+    claimedBy: claimedBy,
+    _links: {
+      self: 'https://some.uri.com/user/123/gifts/456'
+    }
+  };
+
+  return new GiftViewModel({ userId: userId, gift: expectedReturnFromApi });
 }
 
 function getUserGift(id, name) {
@@ -37,16 +70,42 @@ function getWishListItem(id, name, description) {
   };
 }
 
-function service() {
+/*
+ * Mock service layer for prototyping. Accepts all arguments that are going to be
+ * necessary for the real service layer to run. We need the 'userId' for building
+ * URIs to the service for registering for gifts. Example: /users/{otherUserId}/gifts/{giftId}
+ * with a payload of { userId: '{GUID}' }.
+ * @param {object} constArgs Should contain the following properties:
+ *        {string} userId The user identifier of the currently logged in user.
+ */
+function service(constArgs) {
   var self = this;
 
-  self.getGiftsPromise = function() {
+  /*
+   * Get the gifts for a friend.
+   * @param {object} friend The friend to retrieve gifts for.
+   */
+  self.getGiftsPromise = function(friend) {
     return new Promise(function(resolve, reject) {
       resolve([
-        getGift(1, 'Gift 1', 'Gift 1 Description'),
-        getGift(2, 'Gift 2', 'Gift 2 Description'),
-        getGift(3, 'Gift 3', 'Gift 3 Description')
+        getGift(constArgs.userId, 1, 'Gift 1', 'Gift 1 Description', undefined),
+        getGift(constArgs.userId, 2, 'Gift 2', 'Gift 2 Description', '9284790f-eac7-45d5-b8d2-aab15b3da099'), // claimed by someone else
+        getGift(constArgs.userId, 3, 'Gift 3', 'Gift 3 Description', constArgs.userId)
       ]);
+    });
+  };
+
+  self.registerForGiftPromise = function(gift) {
+    return new Promise(function(resolve, reject) {
+      // Make like the API call was made and it returned an updated object with the claimedBy set to this user
+      resolve(getGift(constArgs.userId, gift.id, gift.name, gift.description, constArgs.userId));
+    });
+  };
+
+  self.unregisterForGiftPromise = function(gift) {
+    return new Promise(function(resolve, reject) {
+      // Make like the API call was made and it returned an updated object with the claimedBy set to undefined
+      resolve(getGift(constArgs.userId, gift.id, gift.name, gift.description, undefined));
     });
   };
 
@@ -67,6 +126,12 @@ function service() {
         getFriend(2, 'Matt'),
         getFriend(3, 'Adam')
       ]);
+    });
+  };
+
+  self.unfollowFriendPromise = function(friend) {
+    return new Promise(function(resolve, reject) {
+      resolve();
     });
   };
 

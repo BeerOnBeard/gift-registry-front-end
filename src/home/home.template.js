@@ -36,7 +36,7 @@
     <p class="friends-list-item__name" data-bind="text: name"></p>
     <p>Birthday: <span data-bind="text: birthday"></span></p>
     <div class="friends-list-item__controls">
-      <div>Unfollow</div>
+      <div data-bind="click: $parent.unfollow, clickBubble: false">Unfollow</div>
     </div>
   </div>
 
@@ -45,8 +45,19 @@
     <div class="friends-gift" data-bind="click: $parentContext.$parent.selectGift, css: { 'friends-gift--selected': selected }">
       <p class="friends-gift__name" data-bind="text: name"></p>
       <p data-bind="text: description"></p>
-      <div class="friends-gift__controls">
-        <div>Register</div>
+      <div class="friends-gift-controls" data-bind="css: { 'friends-gift__controls--disabled': claimedBy !== undefined }">
+        <!-- ko if: canUnregister -->
+        <div class="friends-gift-controls__unregister"
+             data-bind="click: $parentContext.$parent.unregisterForGift, clickBubble: false">
+          Unregister
+        </div>
+        <!-- /ko -->
+        <!-- ko ifnot: canUnregister -->
+        <div class="friends-gift-controls__register"
+             data-bind="click: $parentContext.$parent.registerForGift, clickBubble: false, css: { 'friends-gift-controls__register--disabled': !canRegister() }">
+          Register
+        </div>
+        <!-- /ko -->
       </div>
     </div>
   </div>

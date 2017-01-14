@@ -63,6 +63,39 @@ function FriendsViewModel(constArgs) {
     self.selectedGift(gift);
   };
 
+  self.unfollow = function(friend) {
+    self.service.unfollowFriendPromise(friend)
+      .then(function(){
+        self.friends.remove(friend);
+      });
+  };
+
+  self.registerForGift = function(gift) {
+    if (!gift.canRegister()) {
+      return;
+    }
+
+    self.service.registerForGiftPromise(gift)
+      .then(function(updatedGift) {
+        // TODO: Not sure this is the best idea. Maybe create a .clone() method on
+        //       GiftViewModel that would accept gift and clone all the pure properties?
+        gift.claimedBy(updatedGift.claimedBy());
+      });
+  };
+
+  self.unregisterForGift = function(gift) {
+    if (!gift.canUnregister) {
+      return;
+    }
+
+    self.service.unregisterForGiftPromise(gift)
+      .then(function(updatedGift) {
+        // TODO: Not sure this is the best idea. Maybe create a .clone() method on
+        //       GiftViewModel that would accept gift and clone all the pure properties?
+        gift.claimedBy(updatedGift.claimedBy());
+      });
+  };
+
   /*
     Promise to initialize this instance of the FriendsViewModel.
     Returns this instance in resolve upon success.

@@ -3,11 +3,20 @@ var ko = require('knockout');
 
 describe('FriendsViewModel', function(){
   beforeEach(function(){
-    this.mockService = jasmine.createSpyObj('service', [ 'getGiftsPromise' ]);
+    this.mockService = jasmine.createSpyObj(
+      'service',
+      [ 'getGiftsPromise', 'unfollowFriendPromise', 'registerForGiftPromise', 'unregisterForGiftPromise' ]
+    );
 
     this.getGiftsPromise = new Promise(function(resolve){ resolve([{ id: 1 }]); });
+    this.unfollowFriendPromise = new Promise(function(resolve){ resolve(); });
+    this.registerForGiftPromise = new Promise(function(resolve){ resolve({ claimedBy: function(){ return 'expectedClaimer'; }}); });
+    this.unregisterForGiftPromise = new Promise(function(resolve){ resolve({ claimedBy: function(){ return undefined; }}); });
 
     this.mockService.getGiftsPromise.and.returnValue(this.getGiftsPromise);
+    this.mockService.unfollowFriendPromise.and.returnValue(this.unfollowFriendPromise);
+    this.mockService.registerForGiftPromise.and.returnValue(this.registerForGiftPromise);
+    this.mockService.unregisterForGiftPromise.and.returnValue(this.unregisterForGiftPromise);
     this.SUT = new FriendsViewModel({ service: this.mockService });
   });
 
@@ -90,6 +99,93 @@ describe('FriendsViewModel', function(){
 
       it('should set selectedGift to undefined', function(){
         expect(this.SUT.selectedGift()).toBe(undefined);
+      });
+    });
+  });
+
+  describe('when unfollowing a friend', function(){
+    beforeEach(function(done){
+      this.mockFriend = { id: 1 };
+      this.SUT.friends.push(this.mockFriend);
+      this.SUT.unfollow(this.mockFriend);
+
+      this.unfollowFriendPromise.then(function(){ done(); });
+    });
+
+    it('should unfollow friend using the service', function(){
+      expect(this.mockService.unfollowFriendPromise).toHaveBeenCalledWith(this.mockFriend);
+    });
+
+    it('should remove the friend from the friends collection', function(){
+      expect(this.SUT.friends).not.toContain(this.mockFriend);
+    });
+  });
+
+  describe('when registering for a gift', function(){
+    beforeEach(function(){
+      this.mockGift = jasmine.createSpyObj('mockGift', [ 'canRegister', 'claimedBy' ]);
+    });
+
+    describe('and the gift cannot be registered for', function(){
+      beforeEach(function(done){
+        this.mockGift.canRegister.and.returnValue(false);
+        this.SUT.registerForGift(this.mockGift);
+        this.registerForGiftPromise.then(function(){ done(); });
+      });
+
+      it('should not register for the gift', function(){
+        expect(this.mockService.registerForGiftPromise).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('and the gift can be registered for', function(){
+      beforeEach(function(done){
+        this.mockGift.canRegister.and.returnValue(true);
+        this.SUT.registerForGift(this.mockGift);
+        this.registerForGiftPromise.then(function(){ done(); });
+      });
+
+      it('should register for the gift', function(){
+        expect(this.mockService.registerForGiftPromise).toHaveBeenCalledWith(this.mockGift);
+      });
+
+      it('should set claimedBy with the returned value', function(){
+        expect(this.mockGift.claimedBy).toHaveBeenCalledWith('expectedClaimer');
+      });
+    });
+  });
+
+  describe('when unregistering for a gift', function(){
+    beforeEach(function(){
+      this.mockGift = { canUnregister: false, claimedBy: function(){} };
+      spyOn(this.mockGift, 'claimedBy');
+    });
+    
+    describe('and the gift cannot be unregistered', function(){
+      beforeEach(function(done){
+        this.mockGift.canUnregister = false;
+        this.SUT.unregisterForGift(this.mockGift);
+        this.unregisterForGiftPromise.then(function() { done(); });
+      });
+
+      it('should not unregister for the gift', function(){
+        expect(this.mockService.unregisterForGiftPromise).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('and the gift can be unregistered', function(){
+      beforeEach(function(done){
+        this.mockGift.canUnregister = true;
+        this.SUT.unregisterForGift(this.mockGift);
+        this.unregisterForGiftPromise.then(function() { done(); });
+      });
+
+      it('should unregister for the gift', function(){
+        expect(this.mockService.unregisterForGiftPromise).toHaveBeenCalledWith(this.mockGift);
+      });
+
+      it('should set claimedBy', function(){
+        expect(this.mockGift.claimedBy).toHaveBeenCalledWith(undefined);
       });
     });
   });
